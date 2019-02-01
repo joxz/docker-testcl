@@ -1,0 +1,14 @@
+sudo: required
+services:
+  - docker
+
+env:
+  global:
+    - IMAGE_NAME=jones2748/docker-testcl
+
+script:
+  - docker build --tag "$IMAGE_NAME" .
+
+after_script:
+  - docker images
+  - docker run --rm "$IMAGE_NAME" test

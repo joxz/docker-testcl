@@ -9,19 +9,19 @@ The docker image uses [adoptopenjdk/openjdk11:alpine-slim](https://hub.docker.co
 ### Build image
 
 ```bash
-git clone https://github.com/joxz/docker-testcl
+$ git clone https://github.com/joxz/docker-testcl
 
-cd docker-testcl
+$ cd docker-testcl
 
-docker build -t docker-testcl .
+$ docker build -t docker-testcl .
 
 # check docker images
 
 $ docker images
-REPOSITORY                                             TAG                 IMAGE ID            CREATED             SIZE
-docker-testcl                                          latest              8f42d87ed70b        3 minutes ago       248MB
-<none>                                                 <none>              6da68286e681        3 minutes ago       21.9MB
-<none>                                                 <none>              45ce6affa404        45 minutes ago      248MB
+REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
+docker-testcl                   latest              8f42d87ed70b        3 minutes ago       248MB
+<none>                          <none>              6da68286e681        3 minutes ago       21.9MB
+<none>                          <none>              45ce6affa404        45 minutes ago      248MB
 ```
 
 Leftover images (those named `<none>`) from the multistage build process can be deleted with `docker image prune`
