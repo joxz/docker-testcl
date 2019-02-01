@@ -1,6 +1,7 @@
 # docker-testcl
 
 [![Build Status](https://travis-ci.org/joxz/docker-testcl.svg?branch=master)](https://travis-ci.org/joxz/docker-testcl)
+[![docker Hub Pulls](https://img.shields.io/docker/pulls/jones2748/docker-testcl.svg?style=popout)](https://img.shields.io/docker/pulls/jones2748/docker-testcl.svg?style=popout)
 
 Docker container for testing iRules with [TesTcl](https://testcl.com/)
 
@@ -41,7 +42,7 @@ $ docker pull jones2748/docker-testcl:latest
 When running TesTcl against an iRule, a host directory containing irule and test has to be mounted into `/mnt` at the container.
 
 ```bash
-$ docker run --rm -v /hostdir/myirule:/mnt docker-testcl jtcl /mnt/test_myirule.tcl
+$ docker run -it --rm -v /hostdir/myirule:/mnt docker-testcl jtcl /mnt/test_myirule.tcl
 ```
 
 Note: The container directory **HAS** to be `/mnt`, because it's the location where the dockerfile `WORKDIR`is set, and 'jtcl' doesn't handle being called from another path very well.
@@ -50,7 +51,7 @@ e.g. `jtcl /opt/tests/test_my_irule` doesn't work correctly unless you `cd /opt/
 Builtin test for the jtcl irule extension:
 
 ```bash
-$ docker run --rm docker-testcl test
+$ docker run -it --rm docker-testcl test
 Picked up JAVA_TOOL_OPTIONS: -XX:+UseContainerSupport
 The jtcl-irule extension has successfully been installed
 ```
@@ -58,7 +59,7 @@ The jtcl-irule extension has successfully been installed
 Builtin test for an iRule:
 
 ```bash
-$ docker run --rm docker-testcl test_irule
+$ docker run -it --rm docker-testcl test_irule
 Picked up JAVA_TOOL_OPTIONS: -XX:+UseContainerSupport
 
 **************************************************************************
@@ -78,6 +79,14 @@ verification of 'there should be only one Vary header' done.
 verification of 'there should be Accept-Encoding value in Vary header' done.
 -> Test ok
 ```
+
+Shell access to the container:
+
+```bash
+$ docker run -it --rm docker-testcl /bin/sh
+/mnt #
+```
+
 
 ## TODO
 
