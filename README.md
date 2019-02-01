@@ -1,10 +1,12 @@
 # docker-testcl
 
+[![Build Status](https://travis-ci.org/joxz/docker-testcl.svg?branch=master)](https://travis-ci.org/joxz/docker-testcl)
+
 Docker container for testing iRules with [TesTcl](https://testcl.com/)
 
 The docker image uses [adoptopenjdk/openjdk11:alpine-slim](https://hub.docker.com/r/adoptopenjdk/openjdk11)
 
-Docker Hub Link:
+Docker Hub Link: [https://hub.docker.com/r/jones2748/docker-testcl](https://hub.docker.com/r/jones2748/docker-testcl)
 
 ## Usage
 
@@ -27,6 +29,12 @@ docker-testcl                   latest              8f42d87ed70b        3 minute
 ```
 
 Leftover images (those named `<none>`) from the multistage build process can be deleted with `docker image prune`
+
+### Pull from Docker hub
+
+```bash
+$ docker pull jones2748/docker-testcl:latest
+```
 
 ### Run container
 
