@@ -7,8 +7,15 @@ env:
     - IMAGE_NAME=jones2748/docker-testcl
 
 script:
-  - docker build --tag "$IMAGE_NAME" .
+  - docker build -t $IMAGE_NAME:latest .
+  - if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker build -t $IMAGE_NAME:$TRAVIS_BRANCH .; else true ; fi
 
 after_script:
   - docker images
-  - docker run --rm "$IMAGE_NAME" test
+  - docker run --rm $IMAGE_NAME test
+  - docker run --rm $IMAGE_NAME test_irule
+
+after_success:
+  - docker login -u="$DOCKERHUB_USER" -p="$DOCKERHUB_PW"
+  - if [[ $TRAVIS_BRANCH = master ]]; then docker push $IMAGE_NAME:latest; else true; fi
+  - if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker push $IMAGE_NAME:$TRAVIS_TAG; else true ; fi
