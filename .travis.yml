@@ -6,16 +6,23 @@ env:
   global:
     - IMAGE_NAME=jones2748/docker-testcl
 
-script:
-  - docker build -t $IMAGE_NAME:latest .
-  - if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker build -t $IMAGE_NAME:$TRAVIS_BRANCH .; else true ; fi
+before_script:
+  - docker pull $IMAGE_NAME || true
 
-after_script:
-  - docker images
+script:
+  # build latest image always
+  - docker build --pull --cache-from $IMAGE_NAME -t $IMAGE_NAME:latest .
+  # build the tagged image
+  - if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker build --pull --cache-from $IMAGE_NAME -t $IMAGE_NAME:$TRAVIS_BRANCH .; else true ; fi
   - docker run --rm $IMAGE_NAME test
   - docker run --rm $IMAGE_NAME test_irule
 
+after_script:
+  - docker images
+
 after_success:
   - docker login -u="$DOCKERHUB_USER" -p="$DOCKERHUB_PW"
+  # push to latest if master branch
   - if [[ $TRAVIS_BRANCH = master ]]; then docker push $IMAGE_NAME:latest; else true; fi
+  # push tag as well
   - if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker push $IMAGE_NAME:$TRAVIS_TAG; else true ; fi
