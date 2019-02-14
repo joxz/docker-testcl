@@ -3,7 +3,7 @@ FROM alpine:latest as build
 ENV JTCL_VERSION 2.8.0
 ENV TESTCL_VERSION 1.0.13
 
-RUN apk --no-cache add unzip
+RUN apk add --no-cache --update unzip
 
 ADD https://github.com/jtcl-project/jtcl/releases/download/${JTCL_VERSION}-release/jtcl-${JTCL_VERSION}-bin.zip /tmp
 RUN unzip /tmp/jtcl-${JTCL_VERSION}-bin.zip -d /opt/
@@ -29,8 +29,12 @@ LABEL maintainer="https://hub.docker.com/u/jones2748"
 ENV TCLLIBPATH=/opt/TesTcl
 ENV PATH /opt/jtcl:$PATH
 
+RUN apk add --no-cache --update dumb-init
+
 COPY --from=build /opt/ /opt/
 
 WORKDIR /mnt
 
-ENTRYPOINT ["/opt/entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/dumb-init"]
+
+CMD ["/opt/entrypoint.sh"]
