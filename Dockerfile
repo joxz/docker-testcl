@@ -27,7 +27,7 @@ FROM adoptopenjdk/openjdk11:alpine-slim
 LABEL maintainer="https://hub.docker.com/u/jones2748"
 
 ENV TCLLIBPATH=/opt/TesTcl
-ENV PATH /opt/jtcl:$PATH
+ENV PATH /opt/jtcl:/opt/test:/mnt:$PATH
 
 RUN apk add --no-cache --update dumb-init
 
@@ -35,6 +35,6 @@ COPY --from=build /opt/ /opt/
 
 WORKDIR /mnt
 
-ENTRYPOINT ["/usr/bin/dumb-init"]
+ENTRYPOINT ["/usr/bin/dumb-init","--","/opt/entrypoint.sh"]
 
-CMD ["/opt/entrypoint.sh"]
+CMD ["/bin/sh"]
