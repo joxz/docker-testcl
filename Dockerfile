@@ -22,19 +22,22 @@ RUN ["chmod", "+x", "/opt/entrypoint.sh"]
 COPY ./test/ /opt/test
 
 
-FROM adoptopenjdk/openjdk11:alpine-slim
+FROM adoptopenjdk/openjdk11-openj9:alpine-slim
 
 LABEL maintainer="https://hub.docker.com/u/jones2748"
 
 ENV TCLLIBPATH=/opt/TesTcl
 ENV PATH /opt/jtcl:/opt/test:/mnt:$PATH
 
-RUN apk add --no-cache --update dumb-init
-
 COPY --from=build /opt/ /opt/
 
-WORKDIR /mnt
+RUN set -euxo pipefail ;\
+    apk add --no-cache --update dumb-init ;\
+    mv /opt/entrypoint.sh /usr/local/bin ;\
+    mkdir /app
 
-ENTRYPOINT ["/usr/bin/dumb-init","--","/opt/entrypoint.sh"]
+WORKDIR /app
+
+ENTRYPOINT ["/usr/bin/dumb-init","--","entrypoint.sh"]
 
 CMD ["/bin/sh"]
