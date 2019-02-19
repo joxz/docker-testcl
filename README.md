@@ -9,9 +9,7 @@ The docker image uses [adoptopenjdk/openjdk11-openj9:alpine-slim](https://hub.do
 
 Docker Hub Link: [https://hub.docker.com/r/jones2748/docker-testcl](https://hub.docker.com/r/jones2748/docker-testcl)
 
-## Usage
-
-### Build image
+## Build image
 
 ```bash
 $ git clone https://github.com/joxz/docker-testcl
@@ -31,13 +29,13 @@ docker-testcl                   latest              8f42d87ed70b        3 minute
 
 Leftover images (those named `<none>`) from the multistage build process can be deleted with `docker image prune`
 
-### Pull from Docker hub
+## Pull from Docker Hub
 
 ```bash
 $ docker pull jones2748/docker-testcl:latest
 ```
 
-### Run container
+## Run container
 
 When running TesTcl against an iRule, a host directory containing irule and test has to be mounted into `/app` at the container.
 
@@ -46,7 +44,7 @@ $ docker run -it --rm -v /hostdir/myirule:/app docker-testcl jtcl /app/test_myir
 ```
 
 Note: The container directory **HAS** to be `/app`, because it's the location where the dockerfile `WORKDIR`is set, and 'jtcl' doesn't handle being called from another path very well.
-e.g. `jtcl /opt/tests/test_my_irule` doesn't work correctly unless you `cd /opt/tests` first
+e.g. `jtcl /app/tests/test_my_irule` doesn't work correctly unless you `cd /app/tests` first
 
 Builtin test for the jtcl irule extension:
 
@@ -55,7 +53,7 @@ $ docker run -it --rm docker-testcl test
 The jtcl-irule extension has successfully been installed
 ```
 
-Builtin test for an iRule:
+### Builtin test for an iRule:
 
 ```bash
 $ docker run -it --rm docker-testcl test_irule
@@ -78,13 +76,33 @@ verification of 'there should be Accept-Encoding value in Vary header' done.
 -> Test ok
 ```
 
-Shell access to the container:
+### Shell access to the container (user):
 
 ```bash
-$ docker run -it --rm docker-testcl /bin/sh
-/app #
+$ docker run -it --rm docker-testcl
+/app $ whoami
+testcl
 ```
 
+### Shell access to the container (root):
+
+```bash
+$ docker run -it --rm docker-testcl makemeroot
+/app # whoami
+root
+```
+
+## Makefile
+
+```
+$ make
+build                          build container
+build-no-cache                 build container without cache
+clean                          remove images
+help                           this help
+run                            run container
+test                           test container with builtin tests
+```
 
 ## TODO
 

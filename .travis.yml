@@ -10,16 +10,16 @@ script:
   # build latest image always
   - docker build -t $IMAGE_NAME:latest .
   # build the tagged image
-  - if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker build -t $IMAGE_NAME:$TRAVIS_BRANCH .; else true ; fi
+  #- if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker build -t $IMAGE_NAME:$TRAVIS_BRANCH .; else true ; fi
   - docker run --rm $IMAGE_NAME test
   - docker run --rm $IMAGE_NAME test_irule
 
 after_script:
   - docker images
 
-after_success:
-  - docker login -u="$DOCKERHUB_USER" -p="$DOCKERHUB_PW"
-  # push to latest if master branch
-  - if [[ $TRAVIS_BRANCH = master ]]; then docker push $IMAGE_NAME:latest; else true; fi
-  # push tag as well
-  - if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker push $IMAGE_NAME:$TRAVIS_TAG; else true ; fi
+#after_success:
+#  - docker login -u="$DOCKERHUB_USER" -p="$DOCKERHUB_PW"
+#  # push to latest if master branch
+#  - if [[ $TRAVIS_BRANCH = master ]]; then docker push $IMAGE_NAME:latest; else true; fi
+#  # push tag as well
+#  - if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker push $IMAGE_NAME:$TRAVIS_TAG; else true ; fi

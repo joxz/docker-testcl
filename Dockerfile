@@ -3,7 +3,9 @@ FROM alpine:latest as build
 ENV JTCL_VERSION 2.8.0
 ENV TESTCL_VERSION 1.0.13
 
-RUN apk add --no-cache --update unzip
+RUN set -euxo pipefail ;\
+    sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories ;\
+    apk add --no-cache --update unzip
 
 ADD https://github.com/jtcl-project/jtcl/releases/download/${JTCL_VERSION}-release/jtcl-${JTCL_VERSION}-bin.zip /tmp
 RUN unzip /tmp/jtcl-${JTCL_VERSION}-bin.zip -d /opt/
@@ -26,15 +28,17 @@ FROM adoptopenjdk/openjdk11-openj9:alpine-slim
 
 LABEL maintainer="https://hub.docker.com/u/jones2748"
 
-ENV TCLLIBPATH=/opt/TesTcl
-ENV PATH /opt/jtcl:/opt/test:/mnt:$PATH
+ENV TCLLIBPATH=/app/TesTcl
+ENV PATH /app/jtcl:/app/test:/app:$PATH
 
-COPY --from=build /opt/ /opt/
+COPY --from=build /opt/ /app/
 
 RUN set -euxo pipefail ;\
-    apk add --no-cache --update dumb-init ;\
-    mv /opt/entrypoint.sh /usr/local/bin ;\
-    mkdir /app
+    sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories ;\
+    apk add --no-cache --update dumb-init su-exec ;\
+    mv /app/entrypoint.sh /usr/local/bin ;\
+    adduser -s /bin/ash -u 1000 -D -h /app testcl ;\
+    chown -R testcl /app
 
 WORKDIR /app
 

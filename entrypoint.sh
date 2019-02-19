@@ -3,12 +3,15 @@
 set -e
 
 if [ "$1" = 'test' ]; then
-  exec jtcl /opt/test/test_jtcl_irule.tcl
+  exec su-exec testcl jtcl /app/test/test_jtcl_irule.tcl
 
 elif [ "$1" = 'test_irule' ]; then
-  cd /opt/test
-  exec jtcl /opt/test/test_simple_irule.tcl
+  cd /app/test
+  exec su-exec testcl jtcl /app/test/test_simple_irule.tcl
+
+elif [ "$1" = 'makemeroot' ]; then
+  exec ash
 
 else
-  exec "$@"
+  exec su-exec testcl "$@"
 fi
