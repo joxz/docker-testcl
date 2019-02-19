@@ -8,11 +8,11 @@ env:
 
 script:
   # build latest image always
-  - docker build -t $IMAGE_NAME:latest .
+  - docker build --no-cache -t $IMAGE_NAME:latest
   # build the tagged image
   #- if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker build -t $IMAGE_NAME:$TRAVIS_BRANCH .; else true ; fi
-  - docker run --rm $IMAGE_NAME test
-  - docker run --rm $IMAGE_NAME test_irule
+  - docker run -it --rm $IMAGE_NAME test
+  - docker run -it --rm $IMAGE_NAME test_irule
 
 after_script:
   - docker images
