@@ -28,17 +28,17 @@ FROM adoptopenjdk/openjdk11-openj9:alpine-slim
 
 LABEL maintainer="https://hub.docker.com/u/jones2748"
 
-ENV TCLLIBPATH=/app/TesTcl
-ENV PATH /app/jtcl:/app/test:/app:$PATH
+ENV TCLLIBPATH=/opt/TesTcl
+ENV PATH /opt/jtcl:/opt/test:/app:$PATH
 
-COPY --from=build /opt/ /app/
+COPY --from=build /opt/ /opt/
 
 RUN set -euxo pipefail ;\
     sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories ;\
     apk add --no-cache --update dumb-init su-exec ;\
-    mv /app/entrypoint.sh /usr/local/bin ;\
+    mv /opt/entrypoint.sh /usr/local/bin ;\
     adduser -s /bin/ash -u 1000 -D -h /app testcl ;\
-    chown -R testcl /app
+    chmod -R 755 /opt/TesTcl /opt/jtcl
 
 WORKDIR /app
 
