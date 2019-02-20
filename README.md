@@ -100,6 +100,8 @@ build                          build container
 build-no-cache                 build container without cache
 clean                          remove images
 help                           this help
+inspect                        inspect container properties
+logs                           show docker logs for container (ONLY possible while container is running)
 run                            run container
 test                           test container with builtin tests
 ```
