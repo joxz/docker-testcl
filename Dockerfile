@@ -26,7 +26,7 @@ COPY ./test/ /opt/test
 
 FROM adoptopenjdk/openjdk11-openj9:alpine-slim
 
-LABEL maintainer="https://hub.docker.com/u/jones2748"
+LABEL maintainer="Johannes Denninger"
 
 ENV TCLLIBPATH=/opt/TesTcl
 ENV PATH /opt/jtcl:/opt/test:/app:$PATH
