@@ -34,8 +34,8 @@ clean:  ## remove images
 	@docker rmi $(CONTAINERNAME)
 
 .PHONY: inspect
-inspect:  ## inspect container properties
-	@docker inspect $(CONTAINERNAME)
+inspect:  ## inspect container properties - pretty: 'make inspect | jq .' requires jq
+	@docker inspect -f "{{json .ContainerConfig }}" $(CONTAINERNAME)
 
 .PHONY: test
 test:  ## test container with builtin tests
@@ -44,7 +44,11 @@ test:  ## test container with builtin tests
 
 .PHONY: logs
 logs: ## show docker logs for container (ONLY possible while container is running)
-	docker logs -f $(CONTAINERNAME)
+	@docker logs -f $(CONTAINERNAME)
+
+.PHONY: history
+history:  ## show docker history for container
+	@docker history $(CONTAINERNAME)
 
 .PHONY: help
 help:  ## this help
