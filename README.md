@@ -1,6 +1,6 @@
 # docker-testcl
 
-[![Build Status](https://travis-ci.org/joxz/docker-testcl.svg?branch=master)](https://travis-ci.org/joxz/docker-testcl)
+[![Build Status](https://dev.azure.com/john-doe1/docker-testcl/_apis/build/status/joxz.docker-testcl?branchName=master)](https://dev.azure.com/john-doe1/docker-testcl/_build/latest?definitionId=5&branchName=master)
 [![docker Hub Pulls](https://img.shields.io/docker/pulls/jones2748/docker-testcl.svg?style=popout)](https://img.shields.io/docker/pulls/jones2748/docker-testcl.svg?style=popout)
 
 Docker container for testing iRules with [TesTcl](https://testcl.com/)

@@ -39,8 +39,8 @@ inspect:  ## inspect container properties - pretty: 'make inspect | jq .' requir
 
 .PHONY: test
 test:  ## test container with builtin tests
-	docker run -it --rm $(CONTAINERNAME) test
-	docker run -it --rm $(CONTAINERNAME) test_irule
+	docker run --rm $(CONTAINERNAME) test
+	docker run --rm $(CONTAINERNAME) test_irule
 
 .PHONY: logs
 logs: ## show docker logs for container (ONLY possible while container is running)
