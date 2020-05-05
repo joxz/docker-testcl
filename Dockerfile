@@ -1,7 +1,7 @@
 FROM alpine:latest as build
 
 ENV JTCL_VERSION 2.8.0
-ENV TESTCL_VERSION 1.0.13
+ENV TESTCL_VERSION 1.0.14
 
 RUN set -euxo pipefail ;\
     sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories ;\
