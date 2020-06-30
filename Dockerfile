@@ -4,7 +4,6 @@ ENV JTCL_VERSION 2.8.0
 ENV TESTCL_VERSION 1.0.14
 
 RUN set -euxo pipefail ;\
-    sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories ;\
     apk add --no-cache --update unzip
 
 ADD https://github.com/jtcl-project/jtcl/releases/download/${JTCL_VERSION}-release/jtcl-${JTCL_VERSION}-bin.zip /tmp
@@ -33,8 +32,8 @@ ENV PATH /opt/jtcl:/opt/test:/app:$PATH
 
 COPY --from=build /opt/ /opt/
 
+    ### sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories ;\
 RUN set -euxo pipefail ;\
-    sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories ;\
     apk add --no-cache --update dumb-init su-exec ;\
     mv /opt/entrypoint.sh /usr/local/bin ;\
     adduser -s /bin/ash -u 1000 -D -h /app testcl ;\
