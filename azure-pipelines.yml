@@ -3,7 +3,7 @@ pr:
 - master
 
 pool:
-  vmImage: 'ubuntu-16.04'
+  vmImage: 'ubuntu-latest'
 
 steps:
 - script: make build-no-cache

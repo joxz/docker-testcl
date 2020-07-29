@@ -2,3 +2,5 @@
 .gitignore
 LICENSE
 README.md
+azure-pipelines.yml
+changelog.md
