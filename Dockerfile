@@ -22,7 +22,9 @@ RUN ["chmod", "+x", "/opt/entrypoint.sh"]
 
 COPY ./test/ /opt/test
 
+
 FROM adoptopenjdk/openjdk11-openj9:alpine-slim
+
 LABEL maintainer="Johannes Denninger"
 
 ENV TCLLIBPATH=/opt/TesTcl
