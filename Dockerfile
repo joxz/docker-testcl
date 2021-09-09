@@ -9,7 +9,7 @@ RUN set -euxo pipefail ;\
 ADD https://github.com/jtcl-project/jtcl/releases/download/${JTCL_VERSION}-release/jtcl-${JTCL_VERSION}-bin.zip /tmp
 RUN unzip /tmp/jtcl-${JTCL_VERSION}-bin.zip -d /opt/
 
-ADD https://dl.bintray.com/landro/maven/com/testcl/jtcl-irule/0.9/jtcl-irule-0.9.jar /opt/jtcl-${JTCL_VERSION}
+ADD https://github.com/landro/jtcl-irule/releases/download/v0.9/jtcl-irule-0.9.jar /opt/jtcl-${JTCL_VERSION}
 RUN sed -i -e 's/export CLASSPATH/export CLASSPATH=\$dir\/jtcl-irule-0.9.jar:\$CLASSPATH/g' /opt/jtcl-${JTCL_VERSION}/jtcl
 RUN mv /opt/jtcl-${JTCL_VERSION}/ /opt/jtcl
 
@@ -22,8 +22,7 @@ RUN ["chmod", "+x", "/opt/entrypoint.sh"]
 
 COPY ./test/ /opt/test
 
-
-FROM adoptopenjdk/openjdk11-openj9:alpine-slim
+FROM adoptopenjdk/openjdk15-openj9:alpine-slim
 
 LABEL maintainer="Johannes Denninger"
 
@@ -34,7 +33,7 @@ COPY --from=build /opt/ /opt/
 
     ### sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories ;\
 RUN set -euxo pipefail ;\
-    apk add --no-cache --update dumb-init su-exec ;\
+    apk add --no-cache --update dumb-init su-exec git python3 ;\
     mv /opt/entrypoint.sh /usr/local/bin ;\
     adduser -s /bin/ash -u 1000 -D -h /app testcl ;\
     chmod -R 755 /opt/TesTcl /opt/jtcl
