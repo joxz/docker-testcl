@@ -9,7 +9,7 @@ RUN set -euxo pipefail ;\
 ADD https://github.com/jtcl-project/jtcl/releases/download/${JTCL_VERSION}-release/jtcl-${JTCL_VERSION}-bin.zip /tmp
 RUN unzip /tmp/jtcl-${JTCL_VERSION}-bin.zip -d /opt/
 
-ADD https://dl.bintray.com/landro/maven/com/testcl/jtcl-irule/0.9/jtcl-irule-0.9.jar /opt/jtcl-${JTCL_VERSION}
+ADD https://github.com/landro/jtcl-irule/releases/download/v0.9/jtcl-irule-0.9.jar /opt/jtcl-${JTCL_VERSION}
 RUN sed -i -e 's/export CLASSPATH/export CLASSPATH=\$dir\/jtcl-irule-0.9.jar:\$CLASSPATH/g' /opt/jtcl-${JTCL_VERSION}/jtcl
 RUN mv /opt/jtcl-${JTCL_VERSION}/ /opt/jtcl
 
